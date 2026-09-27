@@ -1,40 +1,40 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PDF Field Names</title>
+    <title>PDF Field Renamer</title>
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
     <header class="toolbar">
-      <button id="btn-open" class="primary">Abrir PDF</button>
+      <button id="btn-open" class="primary">Open PDF</button>
       <input id="file-input" type="file" accept="application/pdf,.pdf" hidden />
-      <span id="file-name" class="file-name">Ningún archivo</span>
+      <span id="file-name" class="file-name">No file</span>
 
       <div class="group">
-        <button id="btn-zoom-out" title="Alejar (Ctrl -)" disabled>−</button>
+        <button id="btn-zoom-out" title="Zoom out (Ctrl -)" disabled>−</button>
         <span id="zoom-label" class="zoom-label">150%</span>
-        <button id="btn-zoom-in" title="Acercar (Ctrl +)" disabled>+</button>
+        <button id="btn-zoom-in" title="Zoom in (Ctrl +)" disabled>+</button>
       </div>
 
-      <label class="toggle"><input id="chk-labels" type="checkbox" checked /> Etiquetas</label>
-      <label class="toggle"><input id="chk-boxes" type="checkbox" checked /> Recuadros</label>
+      <label class="toggle"><input id="chk-labels" type="checkbox" checked /> Labels</label>
+      <label class="toggle"><input id="chk-boxes" type="checkbox" checked /> Boxes</label>
 
       <span class="spacer"></span>
       <span id="changes" class="changes" hidden></span>
-      <button id="btn-csv" disabled>Exportar CSV</button>
-      <button id="btn-json" disabled>Exportar JSON</button>
-      <button id="btn-save" class="primary" title="Ctrl S" disabled>Descargar PDF</button>
+      <button id="btn-csv" disabled>Export CSV</button>
+      <button id="btn-json" disabled>Export JSON</button>
+      <button id="btn-save" class="primary" title="Ctrl S" disabled>Download PDF</button>
     </header>
 
     <main class="layout">
       <section id="viewer" class="viewer">
         <div id="empty" class="empty">
-          <p><strong>Arrastra un PDF aquí</strong> o pulsa “Abrir PDF”.</p>
+          <p><strong>Drop a PDF here</strong> or click “Open PDF”.</p>
           <p class="hint">
-            Clic en un campo para seleccionarlo · doble clic para renombrarlo.<br />
-            Usa puntos para jerarquía: <code>padre.hijo</code>
+            Click a field to select it · double-click to rename it.<br />
+            Use dots for hierarchy: <code>parent.child</code>
           </p>
         </div>
         <div id="pages" class="pages"></div>
@@ -42,29 +42,29 @@
 
       <aside class="sidebar">
         <div class="editor" id="editor">
-          <div class="editor-empty" id="editor-empty">Selecciona un campo</div>
+          <div class="editor-empty" id="editor-empty">Select a field</div>
           <form id="editor-form" hidden>
-            <label for="name-input">Nombre del campo</label>
+            <label for="name-input">Field name</label>
             <input id="name-input" type="text" spellcheck="false" autocomplete="off" />
             <div id="name-error" class="error" hidden></div>
             <dl class="meta">
-              <dt>Tipo</dt><dd id="meta-type"></dd>
-              <dt>Página</dt><dd id="meta-page"></dd>
+              <dt>Type</dt><dd id="meta-type"></dd>
+              <dt>Page</dt><dd id="meta-page"></dd>
               <dt>Original</dt><dd id="meta-original"></dd>
             </dl>
             <div class="editor-actions">
-              <button type="submit" class="primary">Aplicar</button>
-              <button type="button" id="btn-revert">Restaurar original</button>
+              <button type="submit" class="primary">Apply</button>
+              <button type="button" id="btn-revert">Restore original</button>
             </div>
           </form>
         </div>
 
         <div class="list-tools">
-          <input id="search" type="search" placeholder="Buscar campo…" disabled />
-          <select id="sort" title="Ordenar" disabled>
-            <option value="position">Posición</option>
-            <option value="name">Nombre</option>
-            <option value="document">Documento</option>
+          <input id="search" type="search" placeholder="Search field…" disabled />
+          <select id="sort" title="Sort" disabled>
+            <option value="position">Position</option>
+            <option value="name">Name</option>
+            <option value="document">Document order</option>
           </select>
         </div>
         <div id="list-count" class="list-count"></div>
@@ -72,7 +72,7 @@
       </aside>
     </main>
 
-    <div id="drop-overlay" class="drop-overlay" hidden>Suelta el PDF para abrirlo</div>
+    <div id="drop-overlay" class="drop-overlay" hidden>Drop the PDF to open it</div>
     <div id="toast" class="toast" hidden></div>
 
     <script type="module" src="/src/main.ts"></script>

@@ -7,14 +7,14 @@ import { type FieldInfo, type FieldType, readFields, renameField, validateName }
 pdfjs.GlobalWorkerOptions.workerPort = new PdfWorker();
 
 const TYPE_LABELS: Record<FieldType, string> = {
-  text: 'Texto',
-  checkbox: 'Casilla',
-  radio: 'Opción (radio)',
-  dropdown: 'Desplegable',
-  list: 'Lista',
-  button: 'Botón',
-  signature: 'Firma',
-  other: 'Otro',
+  text: 'Text',
+  checkbox: 'Checkbox',
+  radio: 'Radio button',
+  dropdown: 'Dropdown',
+  list: 'List box',
+  button: 'Button',
+  signature: 'Signature',
+  other: 'Other',
 };
 
 const ZOOM_STEPS = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4];
@@ -72,10 +72,10 @@ const itemsById = new Map<number, HTMLLIElement>();
 
 async function openFile(file: File) {
   if (!/\.pdf$/i.test(file.name) && file.type !== 'application/pdf') {
-    toast('El archivo no es un PDF.', true);
+    toast('The file is not a PDF.', true);
     return;
   }
-  if (hasChanges() && !confirm('Hay cambios sin descargar. ¿Abrir otro PDF de todos modos?')) return;
+  if (hasChanges() && !confirm('You have changes that were not downloaded. Open another PDF anyway?')) return;
 
   const bytes = new Uint8Array(await file.arrayBuffer());
   let libDoc: PDFDocument;
@@ -83,7 +83,7 @@ async function openFile(file: File) {
     libDoc = await PDFDocument.load(bytes);
   } catch (err) {
     const msg = String((err as Error)?.message ?? err);
-    toast(/encrypt/i.test(msg) ? 'El PDF está cifrado/protegido y no se puede modificar.' : `No se pudo leer el PDF: ${msg}`, true);
+    toast(/encrypt/i.test(msg) ? 'The PDF is encrypted/protected and cannot be modified.' : `Could not read the PDF: ${msg}`, true);
     return;
   }
 
@@ -103,7 +103,7 @@ async function openFile(file: File) {
   el.search.value = '';
   el.viewer.scrollTop = 0;
 
-  if (state.fields.length === 0) toast('Este PDF no tiene campos de formulario.');
+  if (state.fields.length === 0) toast('This PDF has no form fields.');
 
   buildList();
   showEditor();
@@ -272,7 +272,7 @@ function applyFilter() {
     if (match) shown++;
   }
   const total = state.fields.length;
-  el.listCount.textContent = q ? `${shown} de ${total} campos` : `${total} campos`;
+  el.listCount.textContent = q ? `${shown} of ${total} fields` : `${total} fields`;
 }
 
 // ---------------------------------------------------------------- selection & editing
@@ -336,7 +336,7 @@ function applyRename(info: FieldInfo, newName: string): string | null {
   try {
     renameField(state.libDoc!, info, newName);
   } catch (err) {
-    return `No se pudo renombrar: ${(err as Error).message}`;
+    return `Could not rename: ${(err as Error).message}`;
   }
   refreshField(info);
   applyFilter();
@@ -352,7 +352,7 @@ function hasChanges() {
 function updateChanges() {
   const n = state.fields.filter((f) => f.name !== f.originalName).length;
   el.changes.hidden = n === 0;
-  el.changes.textContent = `${n} cambio${n === 1 ? '' : 's'} sin descargar`;
+  el.changes.textContent = `${n} change${n === 1 ? '' : 's'} not downloaded`;
 }
 
 // Inline editor shown on top of a box in the PDF.
@@ -454,7 +454,7 @@ async function savePdf() {
   for (const f of state.fields) refreshField(f);
   updateChanges();
   showEditor();
-  toast('PDF descargado.');
+  toast('PDF downloaded.');
 }
 
 // ---------------------------------------------------------------- misc
@@ -534,7 +534,7 @@ el.editorForm.addEventListener('submit', (e) => {
   if (!info) return;
   const err = applyRename(info, el.nameInput.value);
   setError(err);
-  if (!err) toast(`Renombrado a “${info.name}”.`);
+  if (!err) toast(`Renamed to “${info.name}”.`);
 });
 el.revert.addEventListener('click', () => {
   const info = state.selected;

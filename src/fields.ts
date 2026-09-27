@@ -96,19 +96,19 @@ export function readFields(doc: PDFDocument): FieldInfo[] {
 
 /** Returns an error message, or null if `newName` is a valid new name for `info`. */
 export function validateName(fields: FieldInfo[], info: FieldInfo, newName: string): string | null {
-  if (newName.trim() === '') return 'El nombre no puede estar vacío.';
-  if (newName !== newName.trim()) return 'El nombre no puede empezar ni terminar con espacios.';
+  if (newName.trim() === '') return 'The name cannot be empty.';
+  if (newName !== newName.trim()) return 'The name cannot start or end with spaces.';
   if (newName.split('.').some((s) => s === '')) {
-    return 'Nombre inválido: hay un segmento vacío entre puntos.';
+    return 'Invalid name: there is an empty segment between dots.';
   }
   for (const other of fields) {
     if (other === info) continue;
-    if (other.name === newName) return `Ya existe un campo llamado "${newName}".`;
+    if (other.name === newName) return `A field named "${newName}" already exists.`;
     if (other.name.startsWith(newName + '.')) {
-      return `"${newName}" ya es el grupo padre de "${other.name}".`;
+      return `"${newName}" is already the parent group of "${other.name}".`;
     }
     if (newName.startsWith(other.name + '.')) {
-      return `"${other.name}" es un campo, no puede actuar como grupo padre.`;
+      return `"${other.name}" is a field and cannot be used as a parent group.`;
     }
   }
   return null;

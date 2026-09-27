@@ -13,17 +13,15 @@ pnpm dev
 
 This opens `http://localhost:5173`. Then:
 
-1. Click **Abrir PDF** (Open PDF) or drag the file onto the window.
+1. Click **Open PDF** or drag the file onto the window.
 2. Each field is shown as a box labeled with its name. Colors by type: blue text, green checkbox, purple radio, orange dropdown/list, red signature.
 3. **Click** a box or an item in the sidebar list to select it (the view scrolls to it).
 4. **Double-click** a box to rename it in place (`Enter` applies, `Esc` cancels).
-   You can also edit from the sidebar panel (**Aplicar** = Apply / **Restaurar original** = Restore original).
-5. **Descargar PDF** (Download PDF, `Ctrl+S`) saves `<name>_renamed.pdf` with the new names.
-6. **Exportar CSV / JSON** (Export CSV / JSON): list of fields (name, original name, type, pages) for data mapping.
+   You can also edit from the sidebar panel (**Apply** / **Restore original**).
+5. **Download PDF** (`Ctrl+S`) saves `<name>_renamed.pdf` with the new names.
+6. **Export CSV / JSON**: list of fields (name, original name, type, pages) for data mapping.
 
 Shortcuts: `Ctrl +` / `Ctrl -` to zoom.
-
-The interface is in Spanish.
 
 ## Hierarchical names
 
