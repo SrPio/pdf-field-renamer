@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF Field Names</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header class="toolbar">
+      <button id="btn-open" class="primary">Abrir PDF</button>
+      <input id="file-input" type="file" accept="application/pdf,.pdf" hidden />
+      <span id="file-name" class="file-name">Ningún archivo</span>
+
+      <div class="group">
+        <button id="btn-zoom-out" title="Alejar (Ctrl -)" disabled>−</button>
+        <span id="zoom-label" class="zoom-label">150%</span>
+        <button id="btn-zoom-in" title="Acercar (Ctrl +)" disabled>+</button>
+      </div>
+
+      <label class="toggle"><input id="chk-labels" type="checkbox" checked /> Etiquetas</label>
+      <label class="toggle"><input id="chk-boxes" type="checkbox" checked /> Recuadros</label>
+
+      <span class="spacer"></span>
+      <span id="changes" class="changes" hidden></span>
+      <button id="btn-csv" disabled>Exportar CSV</button>
+      <button id="btn-json" disabled>Exportar JSON</button>
+      <button id="btn-save" class="primary" title="Ctrl S" disabled>Descargar PDF</button>
+    </header>
+
+    <main class="layout">
+      <section id="viewer" class="viewer">
+        <div id="empty" class="empty">
+          <p><strong>Arrastra un PDF aquí</strong> o pulsa “Abrir PDF”.</p>
+          <p class="hint">
+            Clic en un campo para seleccionarlo · doble clic para renombrarlo.<br />
+            Usa puntos para jerarquía: <code>padre.hijo</code>
+          </p>
+        </div>
+        <div id="pages" class="pages"></div>
+      </section>
+
+      <aside class="sidebar">
+        <div class="editor" id="editor">
+          <div class="editor-empty" id="editor-empty">Selecciona un campo</div>
+          <form id="editor-form" hidden>
+            <label for="name-input">Nombre del campo</label>
+            <input id="name-input" type="text" spellcheck="false" autocomplete="off" />
+            <div id="name-error" class="error" hidden></div>
+            <dl class="meta">
+              <dt>Tipo</dt><dd id="meta-type"></dd>
+              <dt>Página</dt><dd id="meta-page"></dd>
+              <dt>Original</dt><dd id="meta-original"></dd>
+            </dl>
+            <div class="editor-actions">
+              <button type="submit" class="primary">Aplicar</button>
+              <button type="button" id="btn-revert">Restaurar original</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="list-tools">
+          <input id="search" type="search" placeholder="Buscar campo…" disabled />
+          <select id="sort" title="Ordenar" disabled>
+            <option value="position">Posición</option>
+            <option value="name">Nombre</option>
+            <option value="document">Documento</option>
+          </select>
+        </div>
+        <div id="list-count" class="list-count"></div>
+        <ul id="field-list" class="field-list"></ul>
+      </aside>
+    </main>
+
+    <div id="drop-overlay" class="drop-overlay" hidden>Suelta el PDF para abrirlo</div>
+    <div id="toast" class="toast" hidden></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
