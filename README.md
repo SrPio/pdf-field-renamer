@@ -1,41 +1,43 @@
-# PDF Field Names
+# PDF Field Renamer
 
-Herramienta local para ver un PDF con formulario y **ver / editar el nombre interno** (`/T`) de cada campo directamente sobre el documento.
+A local tool to open a fillable PDF and **view / edit the internal name** (`/T`) of each form field directly on top of the rendered document.
 
-Todo se procesa en el navegador; el PDF no se sube a ningún sitio.
+Everything runs in the browser; the PDF is never uploaded anywhere.
 
-## Uso
+## Usage
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Se abre `http://localhost:5173`. Luego:
+This opens `http://localhost:5173`. Then:
 
-1. **Abrir PDF** (o arrastrar el archivo a la ventana).
-2. Cada campo aparece como un recuadro con su nombre. Color por tipo: azul texto, verde casilla, morado radio, naranja desplegable/lista, rojo firma.
-3. **Clic** en un recuadro o en la lista lateral → lo selecciona (y hace scroll hasta él).
-4. **Doble clic** en un recuadro → edita el nombre ahí mismo (`Enter` aplica, `Esc` cancela).
-   También se puede editar desde el panel lateral (**Aplicar** / **Restaurar original**).
-5. **Descargar PDF** (`Ctrl+S`) guarda `<nombre>_renamed.pdf` con los nuevos nombres.
-6. **Exportar CSV / JSON**: lista de campos (nombre, nombre original, tipo, páginas) para el mapeo.
+1. Click **Abrir PDF** (Open PDF) or drag the file onto the window.
+2. Each field is shown as a box labeled with its name. Colors by type: blue text, green checkbox, purple radio, orange dropdown/list, red signature.
+3. **Click** a box or an item in the sidebar list to select it (the view scrolls to it).
+4. **Double-click** a box to rename it in place (`Enter` applies, `Esc` cancels).
+   You can also edit from the sidebar panel (**Aplicar** = Apply / **Restaurar original** = Restore original).
+5. **Descargar PDF** (Download PDF, `Ctrl+S`) saves `<name>_renamed.pdf` with the new names.
+6. **Exportar CSV / JSON** (Export CSV / JSON): list of fields (name, original name, type, pages) for data mapping.
 
-Atajos: `Ctrl +` / `Ctrl -` para el zoom.
+Shortcuts: `Ctrl +` / `Ctrl -` to zoom.
 
-## Nombres jerárquicos
+The interface is in Spanish.
 
-En los PDF, el punto separa niveles: `grupo.campo` es el campo `campo` dentro del grupo `grupo`.
+## Hierarchical names
 
-- Si solo cambias la última parte (`grupo.campo` → `grupo.campo_nuevo`), el campo se queda en su grupo.
-- Si cambias el grupo (`grupo.campo` → `otro_grupo.subgrupo.campo`), el campo se mueve a ese grupo, que se crea si no existe. Los grupos que quedan vacíos se eliminan, y el campo conserva los atributos que heredaba (tipo, formato, valor…).
+In PDF forms, a dot separates levels: `group.field` is the field `field` inside the group `group`.
 
-Se bloquean los nombres que chocan con otros: duplicados exactos, o usar como grupo el nombre de un campo que ya existe.
+- If you only change the last part (`group.field` → `group.new_field`), the field stays in its group.
+- If you change the group (`group.field` → `other_group.subgroup.field`), the field is moved to that group, which is created if it doesn't exist. Groups left empty are removed, and the field keeps the attributes it used to inherit (type, format, value…).
 
-Nota: un campo con varios recuadros (radios, o el mismo campo repetido en varias páginas) es **un solo campo**. Renombrarlo cambia todos sus recuadros.
+Names that conflict with other fields are blocked: exact duplicates, or using the name of an existing field as a group.
 
-## Estructura
+Note: a field with several boxes (radio buttons, or the same field repeated across pages) is **a single field**. Renaming it updates all of its boxes.
 
-- `src/fields.ts`: lectura y renombrado de campos (pdf-lib).
-- `src/main.ts`: interfaz, render de páginas (pdf.js), edición y exportación.
-- `src/style.css`: estilos.
+## Structure
+
+- `src/fields.ts`: reading and renaming fields (pdf-lib).
+- `src/main.ts`: UI, page rendering (pdf.js), editing and export.
+- `src/style.css`: styles.
